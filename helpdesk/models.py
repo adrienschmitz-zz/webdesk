@@ -45,6 +45,8 @@ class Solicitacoes(models.Model):
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_atualizacao = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=100, default='Aberto')
+    patrimonio = models.CharField(max_length=100)
+    resposta = models.TextField()
 
     class Meta:
         verbose_name = 'Solicitação'
