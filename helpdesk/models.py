@@ -2,7 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Setores(models.Model):
+class Status(models.Model):
+    nome = models.CharField(max_length=100)
+    cor = models.CharField(max_length=7, default='#000000')
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        verbose_name = 'Status'
+        verbose_name_plural = "Status"
+
+
+class Setor(models.Model):
     nome = models.CharField(max_length=100)
 
     def __str__(self):
@@ -13,9 +25,9 @@ class Setores(models.Model):
         verbose_name_plural = "Setores"
 
 
-class Locais(models.Model):
+class Local(models.Model):
     nome = models.CharField(max_length=100)
-    setor = models.ForeignKey(Setores, on_delete=models.CASCADE)
+    setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
@@ -25,7 +37,7 @@ class Locais(models.Model):
         verbose_name_plural = "Locais"
 
 
-class Solicitantes(models.Model):
+class Solicitante(models.Model):
     nome = models.CharField(max_length=100)
 
     def __str__(self):
@@ -36,17 +48,17 @@ class Solicitantes(models.Model):
         verbose_name_plural = "Solicitantes"
 
 
-class Solicitacoes(models.Model):
+class Solicitacao(models.Model):
     descricao = models.TextField()
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    local = models.ForeignKey(Locais, on_delete=models.CASCADE)
+    local = models.ForeignKey(Local, on_delete=models.CASCADE)
     solicitante = models.ForeignKey(
-        Solicitantes, on_delete=models.CASCADE)
+        Solicitante, on_delete=models.CASCADE)
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_atualizacao = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=100, default='Aberto')
-    patrimonio = models.CharField(max_length=100)
-    resposta = models.TextField()
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    patrimonio = models.CharField(max_length=100, blank=True)
+    resposta = models.TextField(blank=True)
 
     class Meta:
         verbose_name = 'Solicitação'

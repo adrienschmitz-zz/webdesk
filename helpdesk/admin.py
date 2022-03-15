@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Solicitantes, Solicitacoes,  Setores, Locais
+from .models import Solicitante, Solicitacao,  Setor, Local, Status
+
+
+class StatusAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nome')
 
 
 class SolicitanteAdmin(admin.ModelAdmin):
@@ -19,7 +23,8 @@ class SolicitacaoAdmin(admin.ModelAdmin):
                     'data_atualizacao', 'status')
 
 
-admin.site.register(Solicitantes, SolicitanteAdmin)
-admin.site.register(Setores, SetorAdmin)
-admin.site.register(Locais, LocalAdmin)
-admin.site.register(Solicitacoes, SolicitacaoAdmin)
+admin.site.register(Status, StatusAdmin)
+admin.site.register(Solicitante, SolicitanteAdmin)
+admin.site.register(Setor, SetorAdmin)
+admin.site.register(Local, LocalAdmin)
+admin.site.register(Solicitacao, SolicitacaoAdmin)
