@@ -6,7 +6,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body" style="background: #5cb85c; color: white;">
-                    <h5 class="card-title">Nova Solicitação</h5>
+                    <h5 class="card-title">Editar Solicitação</h5>
                     <form method="post" class="solicitacao-form">{%csrf_token%}
                         {% for visible_field in form.visible_fields %}
                         {{ visible_field|as_crispy_field }}

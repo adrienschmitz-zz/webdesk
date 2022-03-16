@@ -15,7 +15,8 @@
             {%for solicitacao in object_list%}
             <a class="link-cards" href="{% url 'solicitacao-form' solicitacao.id %}">
                 <div class="card">
-                    <div id="solicitacao" class="card-body" style="background:  #5cb85c; color: white;">
+                    <div id="solicitacao" class="card-body"
+                        style="background:  {{solicitacao.status.cor}}; color: white">
                         <h5 class="card-title">{{solicitacao.data_criacao|naturalday|title}}</h5>
                         <div style="float:left;">
                             <p class="card-text">Contato: {{solicitacao.solicitante.nome}}</p>
@@ -36,12 +37,10 @@
         <div class="col-sm-2">
             <div class="card sticky-top">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" style="background: #5cb85c; color: white">Aberto</li>
-                    <li class="list-group-item" style="background: #f0ad4e; color: white">Em atendimento</li>
-                    <li class="list-group-item" style="background: #5bc0de; color: white">Empenho</li>
-                    <li class="list-group-item" style="background: #d9534f; color: white">Terceiros</li>
-                    <li class="list-group-item" style="background: #777777; color: white">Finalizado</li>
-
+                    {% for status in status_list %}
+                    <li class="list-group-item" style="background:  {{status.cor}}; color: white">
+                        {{status.nome}}</li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

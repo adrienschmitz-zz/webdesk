@@ -3,7 +3,7 @@ from .models import Solicitante, Solicitacao,  Setor, Local, Status
 
 
 class StatusAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nome')
+    list_display = ('id', 'nome', 'cor')
 
 
 class SolicitanteAdmin(admin.ModelAdmin):
