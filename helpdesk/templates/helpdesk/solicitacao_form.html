@@ -1,20 +1,12 @@
 {%extends 'base.html'%}
 {% load crispy_forms_tags %}
 {%block conteudo%}
+
 <div class="container" style="margin-top:20px">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-body" style="background: #5cb85c; color: white;">
-                    <h5 class="card-title">Editar Solicitação</h5>
-                    <form method="post" class="solicitacao-form">{%csrf_token%}
-                        {% for visible_field in form.visible_fields %}
-                        {{ visible_field|as_crispy_field }}
-                        {% endfor %}
-                        <input type="submit" value="Salvar" class="btn btn-primary">
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div
+        style="background:  {% if solicitacao.status %}{{solicitacao.status.cor}}{% else %}#5cb85c{% endif %}; color: white; padding: 10px">
+        <h5 class="card-title">Editar Solicitação</h5>
+        {% crispy form %}
     </div>
-    {%endblock%}
+</div>
+{%endblock%}

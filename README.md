@@ -8,6 +8,7 @@
 - [x] Chamados com cores conforme o status
 - [x] Possibilidade adicionar novos status
 - [x] Cadastro de Setores, Locais, Solicitantes, Solicitações, Status
+- [ ] Reponsivo
 - [ ] Modo noturno
 - [ ] Abrir para adicionar e editar chamado na mesma guia da lista de chamados
 - [ ] Formulário para adicionar solicitante rapidamente

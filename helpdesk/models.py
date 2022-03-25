@@ -12,6 +12,7 @@ class Status(models.Model):
     class Meta:
         verbose_name = 'Status'
         verbose_name_plural = "Status"
+        ordering = ['nome']
 
 
 class Setor(models.Model):
@@ -35,6 +36,7 @@ class Local(models.Model):
     class Meta:
         verbose_name = 'Local'
         verbose_name_plural = "Locais"
+        ordering = ['nome']
 
 
 class Solicitante(models.Model):
@@ -46,11 +48,23 @@ class Solicitante(models.Model):
     class Meta:
         verbose_name = 'Solicitante'
         verbose_name_plural = "Solicitantes"
+        ordering = ['nome']
+
+
+class Person(User):
+    class Meta:
+        proxy = True
+        ordering = ['first_name']
+        verbose_name = 'Usuário'
+        verbose_name_plural = "Usuários"
+
+    def __str__(self):
+        return self.first_name
 
 
 class Solicitacao(models.Model):
     descricao = models.TextField()
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Person, on_delete=models.CASCADE)
     local = models.ForeignKey(Local, on_delete=models.CASCADE)
     solicitante = models.ForeignKey(
         Solicitante, on_delete=models.CASCADE)
