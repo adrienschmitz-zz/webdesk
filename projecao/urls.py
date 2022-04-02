@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from helpdesk.views import SolicitacaoCreateView, SolicitacaoUpdateView, SolicitacaoListView
+from helpdesk.views import SolicitacaoCreateView, SolicitacaoDetailView, SolicitacaoUpdateView, SolicitacaoListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +23,6 @@ urlpatterns = [
     path('solicitacao-add/', SolicitacaoCreateView.as_view(), name='solicitacao-add'),
     path('solicitacao-update/<int:pk>',
          SolicitacaoUpdateView.as_view(), name='solicitacao-update'),
+    path('solicitacao-detail/<int:pk>',
+         SolicitacaoDetailView.as_view(), name='solicitacao-detail'),
 ]

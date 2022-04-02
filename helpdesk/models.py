@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Status(models.Model):
     nome = models.CharField(max_length=100)
     cor = models.CharField(max_length=7, default='#000000')
+    contador = models.BooleanField(default=False)
 
     def __str__(self):
         return self.nome
@@ -72,8 +73,18 @@ class Solicitacao(models.Model):
     data_atualizacao = models.DateTimeField(auto_now=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     patrimonio = models.CharField(max_length=100, blank=True)
-    resposta = models.TextField(blank=True)
 
     class Meta:
         verbose_name = 'Solicitação'
         verbose_name_plural = "Solicitações"
+
+
+class Resposta(models.Model):
+    resposta = models.TextField(verbose_name='Resposta')
+    solicitacao = models.ForeignKey(Solicitacao, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    data = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.resposta
