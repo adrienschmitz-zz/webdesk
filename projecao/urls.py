@@ -13,9 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
-from helpdesk.views import SolicitacaoCreateView, SolicitacaoDetailView, SolicitacaoUpdateView, SolicitacaoListView
+from helpdesk.views import SolicitacaoCreateView, SolicitacaoDetailView, SolicitacaoUpdateView, SolicitacaoListView, SolicitacaoBusca
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,9 @@ urlpatterns = [
          SolicitacaoUpdateView.as_view(), name='solicitacao-update'),
     path('solicitacao-detail/<int:pk>',
          SolicitacaoDetailView.as_view(), name='solicitacao-detail'),
+    path('busca/', SolicitacaoBusca.as_view(), name='solicitacao_busca'),
+]
+
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

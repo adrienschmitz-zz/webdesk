@@ -4,12 +4,13 @@
 {% block content %}
 <div class="container">
     <div class="row ml-1">
-        <div class="col-md-auto bg-light col-2 rounded text-center">Total<br>
+        <div class="col-md-auto bg-light col-2 rounded text-center w-15 h-100">Total<br>
             <b>{{solictacao_total}}</b>
         </div>
         {% for status in status_list %}
         {% if status.contador == True%}
-        <div class="col-md-auto bg-light col-2 rounded ml-2 text-center">{{status.nome}}<br>
+        <div class="col-md-auto bg-light col-2 rounded ml-2 text-center w-15 h-100">
+            {{status.nome}}<br>
             <b>{{status.solicitacao_set.count}}</b>
         </div>
         {% endif %} {% endfor %}

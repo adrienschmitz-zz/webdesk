@@ -10,29 +10,34 @@ from helpdesk.models import Status
 from django.contrib import messages
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q, Count, Case, When
 
 
-class SolicitacaoCreateView(CreateView):
+class SolicitacaoCreateView(LoginRequiredMixin, CreateView):
     model = Solicitacao
     fields = ('descricao', 'usuario', 'local',
               'solicitante', 'status', 'patrimonio')
     template_name = 'solicitacao.html'
     success_url = '/'
+    login_url = 'accounts/login/'
 
 
-class SolicitacaoUpdateView(UpdateView):
+class SolicitacaoUpdateView(LoginRequiredMixin, UpdateView):
     model = Solicitacao
     form_class = SolicitacaoForm
     template_name = 'solicitacao-update.html'
     success_url = '/'
+    login_url = 'accounts/login/'
 
     solicitacao_form = SolicitacaoForm()
     resposta_form = RespostaForm()
 
 
-class SolicitacaoListView(ListView):
+class SolicitacaoListView(LoginRequiredMixin, ListView):
     model = Solicitacao
     ordering = ['-data_criacao']
+    login_url = 'accounts/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,10 +49,11 @@ class SolicitacaoListView(ListView):
         return context
 
 
-class SolicitacaoDetailView(SingleObjectMixin, FormView):
+class SolicitacaoDetailView(LoginRequiredMixin, SingleObjectMixin, FormView):
     model = Solicitacao
     template_name = 'solicitacao-detail.html'
     form_class = RespostaForm
+    login_url = 'accounts/login/'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Solicitacao.objects.all())
@@ -81,3 +87,25 @@ class SolicitacaoDetailView(SingleObjectMixin, FormView):
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
+
+
+class SolicitacaoBusca(SolicitacaoListView):
+    template_name = 'solicitacao_busca.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        termo = self.request.GET.get('termo')
+
+        if not termo:
+            return qs
+
+        qs = qs.filter(
+            Q(descricao__icontains=termo) |
+            Q(usuario__first_name__iexact=termo) |
+            Q(patrimonio__icontains=termo) |
+            Q(local__nome__iexact=termo) |
+            Q(solicitante__nome__iexact=termo) |
+            Q(status__nome__iexact=termo)
+        )
+
+        return qs
